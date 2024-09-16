@@ -81,11 +81,11 @@ app.post("/books/newbook", async (req, res) => {
       "INSERT INTO books (isbn, title, author, last_reserved_at, is_available) VALUES ($1, $2, $3, $4, $5) RETURNING *",
       [isbn, title, author, last_reserved_at, is_available]
     );
-    const newBook = result.rows; 
-    res.send('New book added');
+    const newBook = result.rows[0]; 
+    res.status(200).json(newBook);
   } 
   catch (err) {
-    res.json({error: 'Internal Server Error' });
+    res.status(500).json({error: 'Internal Server Error' });
   }
 });
 
